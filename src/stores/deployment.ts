@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { defineStore } from 'pinia'
 
 interface ServiceTypeData {
@@ -17,6 +18,17 @@ interface Network {
   vpc: string
   subnet: string
   publicIp: boolean
+}
+
+interface DeploymentResult {
+  id: string
+  service: ServiceTypeData
+  instanceType: string
+  resources: Resources
+  network: Network
+  securityGroups: string[]
+  createdAt?: string
+  updatedAt?: string
 }
 
 type SecurityGroups = string[]
@@ -44,7 +56,7 @@ export const useDeploymentStore = defineStore('deployment', {
     securityGroups: [] as SecurityGroups,
     isSubmitting: false,
     isComplete: false,
-    deploymentResult: null as any
+    deploymentResult: null as DeploymentResult | null
   }),
 
   actions: {
@@ -80,23 +92,39 @@ export const useDeploymentStore = defineStore('deployment', {
           securityGroups: this.securityGroups
         }
 
-        const response = await fetch('https://reqres.in/api/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        })
-
-        if (!response.ok) {
-          throw new Error('Failed to deploy service')
-        }
-
-        this.deploymentResult = await response.json()
+        const response = await axios.post('https://reqres.in/api/users', payload)
+        this.deploymentResult = response.data
         this.isComplete = true
+        return response.data
       } catch (error) {
         console.error('Deployment failed:', error)
-        this.deploymentResult = { error: 'Deployment failed' }
+
+        throw error
+      } finally {
+        this.isSubmitting = false
+      }
+    },
+
+    async updateService(serviceId: string) {
+      this.isSubmitting = true
+
+      try {
+        const payload = {
+          service: this.serviceTypeData,
+          instanceType: this.instanceType,
+          resources: this.resources,
+          network: this.network,
+          securityGroups: this.securityGroups
+        }
+
+        const response = await axios.put(`https://reqres.in/api/users/${serviceId}`, payload)
+        this.deploymentResult = response.data
+        this.isComplete = true
+        return response.data
+      } catch (error) {
+        console.error('Update failed:', error)
+
+        throw error
       } finally {
         this.isSubmitting = false
       }

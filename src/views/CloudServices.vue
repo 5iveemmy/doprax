@@ -21,7 +21,9 @@ const handleDeleteClick = () => {
   }
 }
 
-const serviceInfo = computed(() => store.deploymentResult?.service || {})
+const serviceInfo = computed(
+  () => store.deploymentResult?.service || { description: '', serviceName: '' }
+)
 </script>
 
 <template>
@@ -49,7 +51,7 @@ const serviceInfo = computed(() => store.deploymentResult?.service || {})
 
       <div class="flex items-center justify-between border-t border-t-[#e1e3e6] px-5 py-4">
         <div class="flex items-center gap-8">
-          <div class="cursor-pointer">
+          <div class="cursor-pointer" @click="$router.push({ name: 'EditService' })">
             <img src="/pen.svg" />
           </div>
 
@@ -100,7 +102,7 @@ const serviceInfo = computed(() => store.deploymentResult?.service || {})
                     <h2 class="font-semibold">Cloud Service Details</h2>
 
                     <div class="flex items-center gap-4">
-                      <div class="cursor-pointer">
+                      <div class="cursor-pointer" @click="$router.push({ name: 'EditService' })">
                         <img src="/pen.svg" />
                       </div>
 
