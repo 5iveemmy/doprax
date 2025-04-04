@@ -2,6 +2,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { useDeploymentStore } from '../../stores/deployment'
 import TextSection from '../TextSection.vue'
+import TextInput from '../TextInput.vue'
 
 const store = useDeploymentStore()
 
@@ -75,12 +76,12 @@ watch(
           v-for="type in instanceTypes"
           :key="type.id"
           class="flex cursor-pointer items-center"
-          @click="store.setInstanceType(type.id)"
+          @click="store.setInstanceType(type.title)"
         >
           <input
             type="radio"
             :id="type.id"
-            :value="type.id"
+            :value="type.title"
             v-model="store.instanceType"
             class="mr-3"
           />
@@ -98,49 +99,25 @@ watch(
     </div>
 
     <div class="grid gap-4 pt-4 md:grid-cols-3">
-      <div>
-        <label class="mb-1 block text-sm font-medium">
-          vCPU <span class="text-red-500">*</span>
-        </label>
+      <TextInput label="vCPU" type="number" min="1" v-model="formData.vCPU" :required="true" />
 
-        <input
-          v-model="formData.vCPU"
-          type="number"
-          min="1"
-          class="w-full border-b border-b-gray-100"
-          placeholder="2"
-          required
-        />
-      </div>
+      <TextInput
+        label="Memory (GB)"
+        v-model="formData.memory"
+        :required="true"
+        placeholder="4"
+        type="number"
+        min="1"
+      />
 
-      <div>
-        <label class="mb-1 block text-sm font-medium">
-          Memory (GB) <span class="text-red-500">*</span>
-        </label>
-
-        <input
-          v-model="formData.memory"
-          type="number"
-          min="1"
-          class="w-full border-b border-b-gray-100"
-          placeholder="4"
-          required
-        />
-      </div>
-
-      <div>
-        <label class="mb-1 block text-sm font-medium">
-          Storage (GB) <span class="text-red-500">*</span>
-        </label>
-        <input
-          v-model="formData.storage"
-          type="number"
-          min="1"
-          class="w-full border-b border-b-gray-100"
-          placeholder="100"
-          required
-        />
-      </div>
+      <TextInput
+        label="Storage (GB)"
+        v-model="formData.storage"
+        :required="true"
+        placeholder="4"
+        type="number"
+        min="100"
+      />
     </div>
   </div>
 </template>
