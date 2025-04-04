@@ -69,8 +69,7 @@ const handleChange = () => {
   store.setServiceTypeData({
     serviceName: formData.serviceName,
     description: formData.description,
-    region: formData.region,
-    coverImage: store.serviceTypeData.coverImage
+    region: formData.region
   })
 
   store.setResources({
