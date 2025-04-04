@@ -2,6 +2,9 @@
 import { ref, onMounted } from 'vue'
 import { useDeploymentStore } from '../../stores/deployment'
 import Dropdown from '../Dropdown.vue'
+import TextAreaInput from '../TextAreaInput.vue'
+import TextInput from '../TextInput.vue'
+import TextSection from '../TextSection.vue'
 
 const store = useDeploymentStore()
 
@@ -33,17 +36,18 @@ const updateServiceData = () => {
 const handleChange = () => {
   updateServiceData()
 }
-
-const handleDeleteImage = () => {
-  formData.value.coverImage = null
-  updateServiceData()
-}
 </script>
 
 <template>
-  <p class="text-lg font-medium">Service Basics</p>
-  <p class="pt-2 pb-6 text-gray-500">Provide basic information about your cloud service.</p>
-  <div class="space-y-6">
+  <TextSection
+    title="Service Basics"
+    description="Provide basic information about your cloud service."
+    gap="8px"
+    titleSize="16px"
+    descriptionSize="12px"
+  />
+
+  <div class="mt-6 max-w-[612px] space-y-6">
     <div class="flex items-center space-x-4">
       <div
         class="flex h-[100px] w-[100px] cursor-pointer flex-col items-center justify-center rounded-lg bg-gray-100"
@@ -83,10 +87,7 @@ const handleDeleteImage = () => {
           </svg>
         </button>
 
-        <button
-          @click="handleDeleteImage"
-          class="rounded-lg border border-gray-100 p-2 text-gray-600 hover:text-red-600"
-        >
+        <button class="rounded-lg border border-gray-100 p-2 text-gray-600 hover:text-red-600">
           <svg
             width="16"
             height="17"
@@ -105,28 +106,19 @@ const handleDeleteImage = () => {
       </div>
     </div>
 
-    <div>
-      <label class="mb-1 block text-sm font-medium">
-        Service Name <span class="text-red-500">*</span>
-      </label>
-      <input
-        v-model="formData.serviceName"
-        @input="handleChange"
-        type="text"
-        class="w-full border-b border-b-gray-100 p-2"
-        required
-      />
-    </div>
+    <TextInput
+      label="Service Name"
+      v-model="formData.serviceName"
+      :required="true"
+      @input="handleChange"
+    />
 
-    <div>
-      <label class="mb-1 block text-sm font-medium">Description</label>
-      <textarea
-        v-model="formData.description"
-        @input="handleChange"
-        class="w-full border-b border-b-gray-100"
-        rows="3"
-      ></textarea>
-    </div>
+    <TextAreaInput
+      label="Description"
+      v-model="formData.description"
+      :rows="3"
+      @update:modelValue="handleChange"
+    />
 
     <div>
       <Dropdown
@@ -137,21 +129,6 @@ const handleDeleteImage = () => {
         required
         @update:modelValue="handleChange"
       />
-
-      <!-- <label class="mb-1 block text-sm font-medium">
-        Region <span class="text-red-500">*</span>
-      </label>
-      <select
-        v-model="formData.region"
-        @change="handleChange"
-        class="w-full border-b border-b-gray-100"
-        required
-      >
-        <option value="" disabled>Select a region</option>
-        <option v-for="region in regions" :key="region.id" :value="region.id">
-          {{ region.name }}
-        </option>
-      </select> -->
     </div>
   </div>
 </template>
