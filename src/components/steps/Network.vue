@@ -65,24 +65,6 @@ const handleSecurityGroupToggle = (group: string, isChecked: boolean) => {
     formData.value.securityGroups = formData.value.securityGroups.filter(g => g !== group)
   }
 }
-
-// watch(
-//   () => formData.value.publicIp,
-//   () => {
-//     handleChange()
-//   }
-// )
-
-// watch(
-//   () => formData.value.securityGroups,
-//   () => {
-//     updateNetworkData()
-//   },
-//   { deep: true }
-// )
-
-// watch(() => formData.value.vpc, handleChange)
-// watch(() => formData.value.subnet, handleChange)
 </script>
 
 <template>
@@ -104,22 +86,6 @@ const handleSecurityGroupToggle = (group: string, isChecked: boolean) => {
         required
         @update:modelValue="handleChange"
       />
-      <!-- <div>
-        <label class="mb-1 block text-xs font-medium text-gray-700 md:text-sm">
-          Virtual Private Cloud (VPC) <span class="text-red-500">*</span>
-        </label>
-        <select
-          v-model="formData.vpc"
-          @change="handleChange"
-          class="w-full border-b border-b-gray-100 p-2"
-          required
-        >
-          <option value="" disabled>Select a VPC</option>
-          <option v-for="vpc in vpcOptions" :key="vpc.id" :value="vpc.id">
-            {{ vpc.name }}
-          </option>
-        </select>
-      </div> -->
 
       <Dropdown
         id="subnet"
@@ -129,23 +95,6 @@ const handleSecurityGroupToggle = (group: string, isChecked: boolean) => {
         required
         @update:modelValue="handleChange"
       />
-
-      <!-- <div>
-        <label class="mb-1 block text-xs font-medium text-gray-700 md:text-sm">
-          Subnet <span class="text-red-500">*</span>
-        </label>
-        <select
-          v-model="formData.subnet"
-          @change="handleChange"
-          class="w-full border-b border-b-gray-100 p-2"
-          required
-        >
-          <option value="" disabled>Select a Subnet</option>
-          <option v-for="subnet in subnetOptions" :key="subnet.id" :value="subnet.id">
-            {{ subnet.name }}
-          </option>
-        </select>
-      </div> -->
     </div>
 
     <div>
