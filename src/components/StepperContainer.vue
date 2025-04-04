@@ -41,37 +41,35 @@ const submitForm = () => {
 </script>
 
 <template>
-  <div class="rounded-lg bg-white px-4 py-5 drop-shadow-xs md:px-5 md:py-6">
-    <h2 class="text-lg font-medium">Configure New Cloud Service</h2>
-    <div class="pt-6 pb-8">
-      <StepIndicator :steps="steps" :current-step="currentStep" />
-    </div>
+  <h2 class="text-lg font-medium">Configure New Cloud Service</h2>
+  <div class="pt-6 pb-8">
+    <StepIndicator :steps="steps" :current-step="currentStep" />
+  </div>
 
-    <div class="pt-8">
-      <Service v-if="currentStep === 1" />
-      <Resources v-else-if="currentStep === 2" />
-      <Network v-else-if="currentStep === 3" />
-      <Review v-else-if="currentStep === 4" />
-    </div>
+  <div class="pt-8">
+    <Service v-if="currentStep === 1" />
+    <Resources v-else-if="currentStep === 2" />
+    <Network v-else-if="currentStep === 3" />
+    <Review v-else-if="currentStep === 4" />
+  </div>
 
-    <div class="mt-8 flex justify-between border-t border-t-gray-200 pt-5">
-      <button
-        @click="goToPreviousStep"
-        class="text-400 rounded border border-gray-300 px-4 py-2 text-xs md:text-sm"
-        :disabled="isFirstStep"
-        :class="{
-          'cursor-not-allowed bg-gray-100 opacity-50': isFirstStep,
-          'cursor-pointer': !isFirstStep
-        }"
-      >
-        Back
-      </button>
-      <button
-        @click="goToNextStep"
-        class="bg-custom-green cursor-pointer rounded px-4 py-2 text-xs text-white md:text-sm"
-      >
-        {{ isLastStep ? 'Deploy' : 'Next' }}
-      </button>
-    </div>
+  <div class="mt-8 flex justify-between border-t border-t-gray-200 pt-5">
+    <button
+      @click="goToPreviousStep"
+      class="text-400 rounded border border-gray-300 px-4 py-2 text-xs md:text-sm"
+      :disabled="isFirstStep"
+      :class="{
+        'cursor-not-allowed bg-gray-100 opacity-50': isFirstStep,
+        'cursor-pointer': !isFirstStep
+      }"
+    >
+      Back
+    </button>
+    <button
+      @click="goToNextStep"
+      class="bg-custom-green cursor-pointer rounded px-4 py-2 text-xs text-white md:text-sm"
+    >
+      {{ isLastStep ? 'Deploy' : 'Next' }}
+    </button>
   </div>
 </template>
