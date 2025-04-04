@@ -17,4 +17,6 @@ body {
 
 @theme {
   --font-display: 'Inter', 'sans-serif';
+  --color-primary-800: #2563eb;
+  --color-custom-green: #16a34a;
 }
