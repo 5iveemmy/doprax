@@ -2,6 +2,7 @@
 import TextSection from '../components/TextSection.vue'
 import ServiceSummary from '../components/ServiceSummary.vue'
 import DeleteModal from '../components/DeleteModal.vue'
+import EmptyState from '../components/EmptyState.vue'
 import { computed, ref } from 'vue'
 import { Dialog, DialogPanel, TransitionRoot, TransitionChild } from '@headlessui/vue'
 
@@ -17,20 +18,29 @@ const serviceName = ref('Cloud Service Name')
 
 const handleDeleteClick = () => {
   if (deleteModalRef.value) {
-    deleteModalRef.value.openDeleteModal(currentServiceId.value, serviceName.value)
+    deleteModalRef.value.openDeleteModal(
+      store.deploymentResult?.id || currentServiceId.value,
+      store.deploymentResult?.service.serviceName || serviceName.value
+    )
   }
 }
 
 const serviceInfo = computed(
   () => store.deploymentResult?.service || { description: '', serviceName: '' }
 )
+
+const isEmptyState = computed(() => {
+  return !store.deploymentResult
+})
 </script>
 
 <template>
   <div>
     <h1 class="mb-5 text-lg font-medium">Your Cloud Services</h1>
 
-    <div class="w-full rounded-lg border border-[#e1e3e6] md:w-[466px]">
+    <EmptyState v-if="isEmptyState" />
+
+    <div v-else class="w-full rounded-lg border border-[#e1e3e6] md:w-[466px]">
       <div class="px-5 py-6">
         <div class="mb-6">
           <img

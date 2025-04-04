@@ -128,7 +128,7 @@ const handleCancel = () => {
         descriptionSize="12px"
       />
 
-      <div class="space-y-4">
+      <div class="space-y-4 pt-4">
         <TextInput
           label="Service Name"
           v-model="formData.serviceName"

@@ -130,6 +130,23 @@ export const useDeploymentStore = defineStore('deployment', {
       }
     },
 
+    async deleteService(serviceId: string) {
+      this.isSubmitting = true
+      try {
+        const response = await axios.delete(`https://reqres.in/api/users/${serviceId}`)
+
+        if (this.deploymentResult?.id === serviceId) {
+          this.resetForm()
+        }
+        return response.data
+      } catch (error) {
+        console.error('Delete failed:', error)
+        throw error
+      } finally {
+        this.isSubmitting = false
+      }
+    },
+
     resetForm() {
       this.serviceTypeData = {
         serviceName: '',
