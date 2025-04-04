@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useDeploymentStore } from '../stores/deployment'
 import StepIndicator from './StepIndicator.vue'
 import Service from './steps/ServiceTypeStep.vue'
 import Resources from './steps/Resources.vue'
 import Network from './steps/Network.vue'
 import Review from './steps/Review.vue'
+import { useRouter } from 'vue-router'
 
 const store = useDeploymentStore()
+const router = useRouter()
+
 const currentStep = ref(1)
 
 const steps: Step[] = [
@@ -18,14 +21,11 @@ const steps: Step[] = [
 ]
 
 const isFirstStep = computed(() => currentStep.value === 1)
-const isLastStep = computed(() => currentStep.value === steps.length)
+const isReviewStep = computed(() => currentStep.value === steps.length - 1)
 
 const goToNextStep = () => {
   if (currentStep.value < steps.length) {
     currentStep.value++
-  }
-  if (isLastStep.value) {
-    submitForm()
   }
 }
 
@@ -35,9 +35,21 @@ const goToPreviousStep = () => {
   }
 }
 
-const submitForm = () => {
-  store.submitDeployment()
+const submitForm = async () => {
+  await store.submitDeployment()
+  if (store.isComplete) {
+    router.push({ name: 'Success' })
+  }
 }
+
+watch(
+  () => store.isComplete,
+  completed => {
+    if (completed && currentStep.value === steps.length - 1) {
+      router.push({ name: 'Success' })
+    }
+  }
+)
 </script>
 
 <template>
@@ -65,11 +77,15 @@ const submitForm = () => {
     >
       Back
     </button>
+
     <button
-      @click="goToNextStep"
-      class="bg-custom-green cursor-pointer rounded px-4 py-2 text-xs text-white md:text-sm"
+      @click="isReviewStep ? submitForm() : goToNextStep()"
+      class="cursor-pointer rounded px-4 py-2 text-xs text-white md:text-sm"
+      :class="isReviewStep ? 'bg-custom-green' : 'bg-primary-800'"
+      :disabled="store.isSubmitting"
     >
-      {{ isLastStep ? 'Deploy' : 'Next' }}
+      <span v-if="store.isSubmitting && isReviewStep">Deploying...</span>
+      <span v-else>{{ isReviewStep ? 'Deploy' : 'Next' }}</span>
     </button>
   </div>
 </template>
