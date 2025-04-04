@@ -1,9 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Configuration from './views/Configuration.vue'
+</script>
 
 <template>
-  <div>
-    <h2>hello</h2>
-  </div>
+  <Configuration />
 </template>
-
-<style scoped></style>
