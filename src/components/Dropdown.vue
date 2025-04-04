@@ -1,4 +1,3 @@
-<!-- components/BaseSelect.vue -->
 <script setup lang="ts">
 defineProps<{
   modelValue: string
@@ -27,11 +26,11 @@ const handleChange = (event: Event) => {
       :id="id"
       :value="modelValue"
       @change="handleChange"
-      class="w-full border-b border-b-gray-100 p-2"
+      class="w-full border-b border-b-gray-100 p-2 text-sm focus:border-b-gray-400 focus:ring-0 focus:outline-none"
       :required="required"
     >
       <option value="" disabled>Select an option</option>
-      <option v-for="opt in options" :key="opt.id" :value="opt.id">
+      <option v-for="opt in options" :key="opt.id" :value="opt.name">
         {{ opt.name }}
       </option>
     </select>
