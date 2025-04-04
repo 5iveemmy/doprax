@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "vercel-build": "npm install --legacy-peer-deps && nuxt build"
+    "vercel-build": "npm install --legacy-peer-deps && vite build"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
