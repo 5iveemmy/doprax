@@ -32,6 +32,7 @@
     </p>
 
     <button
+      @click="$router.push({ name: 'CloudServices' })"
       class="bg-primary-800 mt-6 cursor-pointer rounded-md px-4 py-3 text-xs text-white md:text-sm"
     >
       View cloud service
