@@ -69,7 +69,7 @@ defineExpose({ isFormValid })
             :id="type.id"
             :value="type.id"
             v-model="store.instanceType"
-            class="mr-3"
+            class="mr-3 cursor-pointer"
           />
 
           <div>
