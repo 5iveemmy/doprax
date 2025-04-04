@@ -1,7 +1,5 @@
-<script setup lang="ts">
-import Configuration from './views/Configuration.vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <Configuration />
+  <router-view />
 </template>
