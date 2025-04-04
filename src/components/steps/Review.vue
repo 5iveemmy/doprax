@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useDeploymentStore } from '../../stores/deployment'
+import ServiceSummary from '../ServiceSummary.vue'
 
 const store = useDeploymentStore()
 </script>
@@ -38,68 +39,7 @@ const store = useDeploymentStore()
     Please review your service configuration before deployment.
   </p>
 
-  <div class="w-full rounded-lg bg-gray-50 drop-shadow-sm">
-    <p class="px-4 py-5 font-medium md:px-6">Service Summary</p>
-
-    <div class="grid grid-cols-1 gap-4 border-t border-gray-200 px-4 py-4 md:grid-cols-12 md:px-6">
-      <p class="col-span-3 text-xs font-medium text-gray-500">Cover Image</p>
-      <div class="col-span-9">
-        <img
-          class="h-[100px] w-[100px] rounded-lg object-cover object-center"
-          src="/cover-image.jpeg"
-          alt="Cover image"
-        />
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 gap-4 border-t border-gray-200 px-4 py-4 md:grid-cols-12 md:px-6">
-      <p class="col-span-3 text-xs font-medium text-gray-500">Service Name</p>
-      <div class="col-span-9">
-        <p class="text-xs md:text-sm">{{ store?.serviceTypeData?.serviceName }}</p>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 gap-4 border-t border-gray-200 px-4 py-4 md:grid-cols-12 md:px-6">
-      <p class="col-span-3 text-xs font-medium text-gray-500">Description</p>
-      <div class="col-span-9">
-        <p class="text-xs md:text-sm">{{ store?.serviceTypeData?.description }}</p>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 gap-4 border-t border-gray-200 px-4 py-4 md:grid-cols-12 md:px-6">
-      <p class="col-span-3 text-xs font-medium text-gray-500">Region</p>
-      <div class="col-span-9">
-        <p class="text-xs md:text-sm">{{ store?.serviceTypeData?.region }}</p>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 gap-4 border-t border-gray-200 px-4 py-4 md:grid-cols-12 md:px-6">
-      <p class="col-span-3 text-xs font-medium text-gray-500">Resources</p>
-      <div class="col-span-9">
-        <p class="text-xs md:text-sm">
-          {{
-            `${store.resources.vCPU}, ${store.resources.memory} Memory, ${store.resources.storage} Storage`
-          }}
-        </p>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 gap-4 border-t border-gray-200 px-4 py-4 md:grid-cols-12 md:px-6">
-      <p class="col-span-3 text-xs font-medium text-gray-500">Network</p>
-      <div class="col-span-9 flex flex-col gap-1">
-        <p class="text-xs md:text-sm">VPC: {{ store.network.vpc }}</p>
-        <p class="text-xs md:text-sm">Subnet: {{ store.network.subnet }}</p>
-        <p class="text-xs md:text-sm">Public IP: {{ store.network.publicIp ? 'Yes' : 'No' }}</p>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 gap-4 border-t border-gray-200 px-4 py-4 md:grid-cols-12 md:px-6">
-      <p class="col-span-3 text-xs font-medium text-gray-500">Security Groups</p>
-      <div class="col-span-9">
-        <p class="text-xs md:text-sm">{{ store.securityGroups.join(', ') || 'None' }}</p>
-      </div>
-    </div>
-  </div>
+  <ServiceSummary showSummary />
 
   <div class="rouned-lg mt-6 mb-14 bg-[#eff6ff] px-7 py-4 md:mb-20">
     <p class="text-xs font-medium text-[#1e40af] md:text-sm">Ready to deploy</p>
