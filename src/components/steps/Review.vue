@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useDeploymentStore } from '../../stores/deployment'
 import ServiceSummary from '../ServiceSummary.vue'
-
-const store = useDeploymentStore()
 </script>
 
 <template>
