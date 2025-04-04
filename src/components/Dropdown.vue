@@ -30,7 +30,7 @@ const handleChange = (event: Event) => {
       :required="required"
     >
       <option value="" disabled>Select an option</option>
-      <option v-for="opt in options" :key="opt.id" :value="opt.name">
+      <option v-for="opt in options" :key="opt.id" :value="opt.id">
         {{ opt.name }}
       </option>
     </select>

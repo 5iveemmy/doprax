@@ -3,6 +3,7 @@ import { ref, onMounted, watch } from 'vue'
 import { useDeploymentStore } from '../../stores/deployment'
 import TextSection from '../TextSection.vue'
 import TextInput from '../TextInput.vue'
+import { instanceTypes } from '../../data.ts'
 
 const store = useDeploymentStore()
 
@@ -11,29 +12,6 @@ const formData = ref({
   memory: '',
   storage: ''
 })
-
-const instanceTypes: InstanceTypes[] = [
-  {
-    id: 'standard',
-    title: 'Standard (General Purpose)',
-    subtitle: 'Balanced compute, memory'
-  },
-  {
-    id: 'compute',
-    title: 'Compute Optimized',
-    subtitle: 'High performance processors'
-  },
-  {
-    id: 'memory',
-    title: 'Memory Optimized',
-    subtitle: 'Fast performance for memory-intensive workloads'
-  },
-  {
-    id: 'storage',
-    title: 'Storage Optimized',
-    subtitle: 'Fast performance for memory-intensive workloads'
-  }
-]
 
 onMounted(() => {
   if (store.resources) {
@@ -81,7 +59,7 @@ watch(
           <input
             type="radio"
             :id="type.id"
-            :value="type.title"
+            :value="type.id"
             v-model="store.instanceType"
             class="mr-3"
           />

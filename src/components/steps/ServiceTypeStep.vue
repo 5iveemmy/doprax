@@ -5,6 +5,7 @@ import Dropdown from '../Dropdown.vue'
 import TextAreaInput from '../TextAreaInput.vue'
 import TextInput from '../TextInput.vue'
 import TextSection from '../TextSection.vue'
+import { regions } from '../../data.ts'
 
 const store = useDeploymentStore()
 
@@ -14,13 +15,6 @@ const formData = ref({
   region: '',
   coverImage: null
 })
-
-const regions: Option[] = [
-  { id: 'us-east', name: 'US East' },
-  { id: 'us-west', name: 'US West' },
-  { id: 'eu-central', name: 'EU Central' },
-  { id: 'asia-pacific', name: 'Asia Pacific' }
-]
 
 onMounted(() => {
   formData.value = {

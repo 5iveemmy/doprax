@@ -4,6 +4,7 @@ import { useDeploymentStore } from '../../stores/deployment'
 import TextSection from '../TextSection.vue'
 import Checkbox from '../Checkbox.vue'
 import Dropdown from '../Dropdown.vue'
+import { subnetOptions, vpcOptions, securityGroupOptions } from '../../data.ts'
 
 const store = useDeploymentStore()
 
@@ -13,25 +14,6 @@ const formData = ref({
   publicIp: false,
   securityGroups: [] as string[]
 })
-
-const securityGroupOptions: Option[] = [
-  { id: 'web', name: 'Web Traffic (80, 443)' },
-  { id: 'ssh', name: 'SSH Access (22)' },
-  { id: 'database', name: 'Database (3306, 5432)' },
-  { id: 'internal', name: 'Internal Only' }
-]
-
-const vpcOptions: Option[] = [
-  { id: 'vpc-123456', name: 'Default VPC (vpc-123456)' },
-  { id: 'vpc-789012', name: 'Production VPC (vpc-789012)' },
-  { id: 'vpc-345678', name: 'Development VPC (vpc-345678)' }
-]
-
-const subnetOptions: Option[] = [
-  { id: 'subnet-123456', name: 'Public Subnet (subnet-123456)' },
-  { id: 'subnet-789012', name: 'Private Subnet (subnet-789012)' },
-  { id: 'subnet-345678', name: 'Database Subnet (subnet-345678)' }
-]
 
 onMounted(() => {
   formData.value = {
