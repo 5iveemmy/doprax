@@ -1,9 +1,9 @@
 @import 'tailwindcss';
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: normal;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,4 +13,10 @@
 
 body {
   margin: 0;
+}
+
+@theme {
+  --font-display: 'Inter', 'sans-serif';
+  --color-primary-800: #2563eb;
+  --color-custom-green: #16a34a;
 }
