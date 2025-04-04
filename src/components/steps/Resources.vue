@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { useDeploymentStore } from '../../stores/deployment'
 import TextSection from '../TextSection.vue'
 import TextInput from '../TextInput.vue'
@@ -11,6 +11,12 @@ const formData = ref({
   vCPU: '',
   memory: '',
   storage: ''
+})
+
+const isFormValid = computed(() => {
+  return (
+    store.resources.vCPU !== '' && store.resources.memory !== '' && store.resources.storage !== ''
+  )
 })
 
 onMounted(() => {
@@ -26,6 +32,8 @@ watch(
   },
   { deep: true }
 )
+
+defineExpose({ isFormValid })
 </script>
 
 <template>

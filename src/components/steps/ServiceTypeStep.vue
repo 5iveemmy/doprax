@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useDeploymentStore } from '../../stores/deployment'
 import Dropdown from '../Dropdown.vue'
 import TextAreaInput from '../TextAreaInput.vue'
@@ -12,8 +12,11 @@ const store = useDeploymentStore()
 const formData = ref({
   serviceName: '',
   description: '',
-  region: '',
-  coverImage: null
+  region: ''
+})
+
+const isFormValid = computed(() => {
+  return formData.value.serviceName.trim() !== '' && formData.value.region !== ''
 })
 
 onMounted(() => {
@@ -30,6 +33,10 @@ const updateServiceData = () => {
 const handleChange = () => {
   updateServiceData()
 }
+
+defineExpose({
+  isFormValid
+})
 </script>
 
 <template>

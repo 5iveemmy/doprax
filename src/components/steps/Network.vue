@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useDeploymentStore } from '../../stores/deployment'
 import TextSection from '../TextSection.vue'
 import Checkbox from '../Checkbox.vue'
@@ -13,6 +13,12 @@ const formData = ref({
   subnet: '',
   publicIp: false,
   securityGroups: [] as string[]
+})
+
+//valid vpc, subnet
+
+const isFormValid = computed(() => {
+  return store.network.vpc !== '' && store.network.subnet !== ''
 })
 
 onMounted(() => {
@@ -47,6 +53,8 @@ const handleSecurityGroupToggle = (group: string, isChecked: boolean) => {
     formData.value.securityGroups = formData.value.securityGroups.filter(g => g !== group)
   }
 }
+
+defineExpose({ isFormValid })
 </script>
 
 <template>

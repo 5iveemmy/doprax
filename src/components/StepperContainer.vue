@@ -12,6 +12,22 @@ const store = useDeploymentStore()
 const router = useRouter()
 
 const currentStep = ref(1)
+const serviceStepRef = ref()
+const resourcesStepRef = ref()
+const networkStepRef = ref()
+
+const isNextDisabled = computed(() => {
+  switch (currentStep.value) {
+    case 1:
+      return serviceStepRef.value?.isFormValid === false
+    case 2:
+      return resourcesStepRef.value?.isFormValid === false
+    case 3:
+      return networkStepRef.value?.isFormValid === false
+    default:
+      return false
+  }
+})
 
 const steps: Step[] = [
   { id: 1, title: 'Service Basics', description: 'Define your service details' },
@@ -36,9 +52,11 @@ const goToPreviousStep = () => {
 }
 
 const submitForm = async () => {
-  await store.submitDeployment()
-  if (store.isComplete) {
-    router.push({ name: 'Success' })
+  if (!isNextDisabled.value) {
+    await store.submitDeployment()
+    if (store.isComplete) {
+      router.push({ name: 'Success' })
+    }
   }
 }
 
@@ -59,9 +77,9 @@ watch(
   </div>
 
   <div class="pt-8">
-    <Service v-if="currentStep === 1" />
-    <Resources v-else-if="currentStep === 2" />
-    <Network v-else-if="currentStep === 3" />
+    <Service v-if="currentStep === 1" ref="serviceStepRef" />
+    <Resources v-else-if="currentStep === 2" ref="resourcesStepRef" />
+    <Network v-else-if="currentStep === 3" ref="networkStepRef" />
     <Review v-else-if="currentStep === 4" />
   </div>
 
@@ -81,8 +99,11 @@ watch(
     <button
       @click="isReviewStep ? submitForm() : goToNextStep()"
       class="cursor-pointer rounded px-4 py-2 text-xs text-white md:text-sm"
-      :class="isReviewStep ? 'bg-custom-green' : 'bg-primary-800'"
-      :disabled="store.isSubmitting"
+      :class="[
+        isReviewStep ? 'bg-custom-green' : 'bg-primary-800',
+        isNextDisabled ? 'cursor-not-allowed opacity-50' : ''
+      ]"
+      :disabled="store.isSubmitting || isNextDisabled"
     >
       <span v-if="store.isSubmitting && isReviewStep">Deploying...</span>
       <span v-else>{{ isReviewStep ? 'Deploy' : 'Next' }}</span>

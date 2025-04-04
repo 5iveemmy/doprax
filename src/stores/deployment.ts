@@ -5,7 +5,6 @@ interface ServiceTypeData {
   serviceName: string
   description: string
   region: string
-  coverImage: any
 }
 
 interface Resources {
@@ -151,8 +150,7 @@ export const useDeploymentStore = defineStore('deployment', {
       this.serviceTypeData = {
         serviceName: '',
         description: '',
-        region: '',
-        coverImage: null
+        region: ''
       }
       this.resources = {
         vCPU: '',
