@@ -116,7 +116,7 @@ const isEmptyState = computed(() => {
                         <img src="/pen.svg" />
                       </div>
 
-                      <div class="cursor-pointer">
+                      <div class="cursor-pointer" @click="handleDeleteClick">
                         <img src="/trash.svg" />
                       </div>
 
