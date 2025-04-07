@@ -13,16 +13,14 @@ const store = useDeploymentStore()
 const isOpen = ref(false)
 
 const deleteModalRef = ref<InstanceType<typeof DeleteModal> | null>(null)
-const currentServiceId = ref('cloud-service-123')
-const serviceName = ref('Cloud Service Name')
 
 const handleDeleteClick = () => {
-  if (deleteModalRef.value) {
-    deleteModalRef.value.openDeleteModal(
-      store.deploymentResult?.id || currentServiceId.value,
-      store.deploymentResult?.service.serviceName || serviceName.value
-    )
-  }
+  if (!store.deploymentResult) return
+
+  deleteModalRef.value?.openDeleteModal(
+    store.deploymentResult.id,
+    store.deploymentResult.service.serviceName
+  )
 }
 
 const serviceInfo = computed(

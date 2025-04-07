@@ -27,7 +27,6 @@ const confirmDelete = async () => {
   try {
     await store.deleteService(serviceToDelete.value.id)
     closeModal()
-    window.location.reload()
   } catch (error) {
     console.error('Failed to delete service:', error)
   }
